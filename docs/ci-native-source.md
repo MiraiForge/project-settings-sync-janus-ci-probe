@@ -1,8 +1,9 @@
 # Native macOS source evidence
 
 The `test` matrix retains Linux and `macos-latest`, and `build` still needs the entire
-`test` matrix. Fork PR checks use GitHub-hosted runners; same-repository Linux checks
-remain on their existing runner until the protected Janus gate is commissioned.
+`test` matrix. All Linux checks temporarily use ephemeral GitHub-hosted Ubuntu 24.04
+because the legacy self-hosted queue is unavailable. Fork PR checks remain hosted;
+the protected Janus gate must be commissioned before any Linux cutover.
 This change does not authorize a Buildkite build or replace either test leg.
 
 On pushes to `main` and same-repository PRs into `main`, the macOS leg captures

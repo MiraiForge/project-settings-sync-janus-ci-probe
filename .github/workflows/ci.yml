@@ -13,10 +13,10 @@ permissions:
 # Review fork workflow changes before approving: routing is not a runner access boundary.
 jobs:
   test:
-    runs-on: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository && contains(matrix.os, 'self-hosted') && 'ubuntu-24.04' || matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [[self-hosted, Linux, X64], macos-latest]
+        os: [ubuntu-24.04, macos-latest]
 
     steps:
       - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
@@ -69,7 +69,7 @@ jobs:
         run: bun test
 
   build:
-    runs-on: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name != github.repository && 'ubuntu-24.04' || fromJSON('["self-hosted","Linux","X64"]') }}
+    runs-on: ubuntu-24.04
     needs: test
 
     steps:
