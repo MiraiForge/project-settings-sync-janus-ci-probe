@@ -89,8 +89,10 @@ admit work to Janus.
    full expected name, matching workflow-run/repository/head-repository IDs and
    source identity. The artifact API provides run metadata, not a producer job ID
    or run-attempt field: bind the attempt through the exact name, JSON and successful
-   upload step. Verify creation falls within that upload step's timestamps, the
-   archive digest, and the returned artifact ID against the upload-step record.
+   upload step. Match the returned artifact ID and archive digest to the authenticated
+   upload-step log, before the next install step; verify the downloaded archive digest.
+   API artifact creation timestamps can lag step completion and cannot prove ordering.
+   Require the successful upload step to precede installation instead.
    Reject duplicate names, replacement uploads, expired/deleted artifacts and any
    ambiguity. [Artifacts API](https://docs.github.com/en/rest/actions/artifacts)
 5. Download only from the authenticated artifact endpoint; cap archive size and
